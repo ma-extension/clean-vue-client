@@ -1,28 +1,58 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Popup v-if="isReader" />
+    <Error v-else />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import utils from './utils'
+import Popup from './components/Popup.vue'
+import Error from './components/Error.vue'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    Popup,
+    Error
+  },
+  data () {
+    return {
+      isReader: false
+    }
+  },
+  methods: {
+    checkIsReader () {
+      let ALLOWED_HOSTNAMES = [
+        'onepiece-ex.com.br'
+      ]
+      
+      utils.current_url().then((resp) => {
+        let hostname = utils.url_domain(resp)
+
+        let aux = ALLOWED_HOSTNAMES.filter((curr) => {
+          return curr === hostname
+        })
+  
+        if (aux.length > 0) {
+          this.isReader = true
+        }
+      })
+    }
+  },
+  mounted () {
+    this.checkIsReader()
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+* {
+  margin: 0%;
+  padding: 0%;
+  box-sizing: border-box;
+}
+body {
+  width: 300px;
 }
 </style>
