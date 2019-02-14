@@ -4,9 +4,9 @@
     <div
       class="container">
       <h1 class="title">{{ manga.name }}, Cap: {{ manga.cap }}</h1>
-      <p>Em: <a :href="manga.origin">{{ manga.origin }}</a></p>
+      <p>Em: <a :href="hostname">{{ hostname }}</a></p>
       <p class="subtitle">Histórico de leitura:</p>
-      <p>atual url: {{ hostname }}</p>
+      <p @click="gotoRoot()">atual url: {{ hostname }}</p>
     </div>
   </div>
 </template>
@@ -35,10 +35,13 @@ export default {
     }
   },
   methods: {
+    gotoRoot () {
+      chrome.tabs.update(null, {url: 'https://'+this.hostname})
+    },
     loadCurrentManga () {
       this.manga.name = 'One Piece'
       this.manga.cap = '500'
-      this.manga.origin = 'https://op-ex.com.br'
+      this.manga.origin = this.hostname
     }
   },
   mounted () {
