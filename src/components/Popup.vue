@@ -4,10 +4,12 @@
     <div
       class="container">
       <p>Você parou em:</p>
-      <h1 class="title">{{ manga.name }}, Cap: {{ manga.cap }}</h1>
-      <p>Em: <a :href="hostname">{{ hostname }}</a></p>
+      <h1 class="title">{{ reader.last_manga.name }}, Cap: {{ reader.last_manga.cap }}</h1>
+      <p>Em: <a :href="reader.last_manga.url" @click.native="gotoRoot()">{{ reader.last_manga.url }}</a></p>
       <p class="subtitle">Histórico de leitura:</p>
-      <p @click="gotoRoot()">atual url: {{ hostname }}</p>
+      <div v-for="(current, index) in lastMangaHistory()" :key="index">
+        <p>{{ reader.last_manga.name}}, {{ current.cap }}</p>
+      </div>
     </div>
   </div>
 </template>
@@ -15,6 +17,7 @@
 <script>
 import Banner from '../components/Banner.vue'
 import utils from '../utils'
+import history from '../history.json'
 
 export default {
   components: {
@@ -23,33 +26,40 @@ export default {
   data () {
     return {
       url: '',
-      manga: {
-        name: '',
-        cap: '',
-        origin: ''  
-      }
+      reader: null
     }
   },
   computed: {
     hostname () {
       return utils.url_domain(this.url)
-    }
+    },
+    // reader () {
+    //   utils.current_reader().then(resp => {
+    //     return resp
+    //   }).catch(err => {
+    //     console.log(err)
+    //   })
+    // }
   },
   methods: {
     gotoRoot () {
       chrome.tabs.update(null, {url: 'https://'+this.hostname})
     },
-    loadCurrentManga () {
-      this.manga.name = 'One Piece'
-      this.manga.cap = '500'
-      this.manga.origin = this.hostname
+    lastMangaHistory () {
+      return this.reader.mangas.filter((element) => {
+        return element.name === this.reader.last_manga.name
+      })[0].history
     }
   },
   mounted () {
-    this.loadCurrentManga()
+    utils.current_reader().then(resp => {
+        this.reader = resp
+      }).catch(err => {
+        console.log(err)
+      })
 
-    utils.current_url().then((resp) => {
-      this.url = resp
+    utils.current_url().then((url) => {
+      this.url = url
     })
   }
 }
