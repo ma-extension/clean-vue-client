@@ -1,0 +1,16 @@
+[
+    {
+        "name": "OPEX",
+        "mangas": [
+            {
+                "name": "One Piece",
+                "history": [
+                    {
+                        "cap": "500",
+                        "url": "https://onepiece-ex.com.br/mangas/leitor/500/#1"
+                    }
+                ]
+            }
+        ]
+    }
+]
