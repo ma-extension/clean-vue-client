@@ -1,6 +1,7 @@
 [
     {
         "name": "OPEX",
+        "hostname": "onepiece-ex.com.br",
         "mangas": [
             {
                 "name": "One Piece",
@@ -8,9 +9,18 @@
                     {
                         "cap": "500",
                         "url": "https://onepiece-ex.com.br/mangas/leitor/500/#1"
+                    },
+                    {
+                        "cap": "499",
+                        "url": "https://onepiece-ex.com.br/mangas/leitor/499/#1"
                     }
                 ]
             }
-        ]
+        ],
+        "last_manga": {
+            "name": "One Piece",
+            "cap": "500",
+            "url": "https://onepiece-ex.com.br/mangas/leitor/500/#1"
+        }
     }
 ]
