@@ -3,6 +3,7 @@
     <Banner />
     <div
       class="container">
+      <p>Você parou em:</p>
       <h1 class="title">{{ manga.name }}, Cap: {{ manga.cap }}</h1>
       <p>Em: <a :href="hostname">{{ hostname }}</a></p>
       <p class="subtitle">Histórico de leitura:</p>
