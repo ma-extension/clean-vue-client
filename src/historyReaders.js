@@ -1,0 +1,146 @@
+const READERS = [
+    {
+        name: 'onepiece-ex',
+        hostname: "onepiece-ex.com.br",
+        regex_expression: /https:\/\/onepiece-ex\.com\.br\/mangas\/leitor\/(?<cap>[0-9]*)\/#(?<page>[0-9]*)/,
+        exclusive_for: 'One Piece'
+    },
+    {
+        name: 'central-de-mangas',
+        hostname: "cdmnet.com.br",
+        regex_expression: /http:\/\/cdmnet\.com\.br\/titulos\/(?<manga>[a-zA-Z0-9\-\_\%]*)\/manga\/ler-online\/(?<cap>[0-9]*)#(?<page>[0-9]*)$/,
+    }
+]
+
+function getCurrentReader () {
+    let reader = READERS.filter((curr) => {
+        return curr.hostname === location.hostname
+    })
+
+    return (reader.length > 0) ? reader[0] : null
+}
+
+function extractCurrentMangaInfo (reader) {
+    /*  if the user are reading something, extract manga infos by url
+        if not, just pass away
+    */
+    let match = reader.regex_expression.exec(location.href)
+    if (!match) return null
+
+    let groups = match.groups
+    
+    if (reader.exclusive_for) {
+        /*  verify if the reader is exclusive for some manga
+            and add/replace 'manga' field in infos within the reader.exclusive_for
+        */
+        groups = {...groups, ...{manga: reader.exclusive_for}}
+    }
+
+    return groups
+}
+function updateReaderHistory(current, manga_infos) {
+    // loop into mangás to find the manga, and then your chapter to update them or add something
+    current.mangas.forEach((element, index) => {
+        if (current.mangas[index].name === manga_infos.manga) {
+            let isCapFound = false
+            current.mangas[index].history.forEach((el, i) => {
+                // finds the chapter and update the last page read
+                if (current.mangas[index].history[i].cap === manga_infos.cap) {
+                    current.mangas[index].history[i].page = manga_infos.page
+                    isCapFound = true
+                }
+            })
+            if (!isCapFound) {
+                current.mangas[index].history.push({cap: manga_infos.cap, page: manga_infos.page})
+                console.log('INSERIDO NOVO CAPITULO NO HISTORICO')
+            }
+        }
+    })
+
+    return current
+}
+
+function addHistoryReadersInlocalStorage () {
+    // if not in reader, just pass away
+    let reader = getCurrentReader()
+    if (!reader) return;
+    
+    // if not reading something in the reader, just pass away
+    let manga_infos = extractCurrentMangaInfo(reader)
+    if (!manga_infos) return;
+    
+    // at this point, assumes that the user is reading something
+
+    let manga_history = [
+        // prototype object of history
+        {
+            reader: reader.name,
+            hostname: reader.hostname,
+            mangas: [
+                {
+                    name: manga_infos.manga,
+                    history: [
+                        {
+                            cap: manga_infos.cap,
+                            page: manga_infos.page
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+
+    // get history object from storage
+    chrome.storage.sync.get(['historyReaders'], function(items) {
+        let history_readers = items.historyReaders
+        
+        if (history_readers) {
+            console.log('ENTRANDO NO HISTORY READERS')
+            let isReaderFound = false
+
+            history_readers.forEach((element, index) => {
+                if (element.reader === reader.name) {
+                    /*
+                    This point is important to explain,
+                    if the reader is not in storage, add them using the prototype history object,
+                    if is, just update the last page read.     
+                    */
+                   isReaderFound = true
+                    console.log('ATUALIZANDO HISTORICO')
+                    history_readers[index] = updateReaderHistory(history_readers[index], manga_infos)
+                }
+            })
+
+            if (!isReaderFound) history_readers.push(manga_history[0])
+        
+        } else {
+            history_readers = manga_history
+        }
+        // put the new history object into the storage
+        chrome.storage.sync.set({ historyReaders: history_readers }, function () {
+            console.log('Histórico salvo/atualizado com sucesso!')
+        })
+    })
+};
+
+// console.log(location.href)
+// chrome.storage.sync.set({'foo': 'bar'}, function() {
+//     console.log('Settings saved')
+// })
+
+// chrome.storage.sync.set({foo: {bar: 'hello'}}, function() {
+//     console.log('Settings saved')
+// })
+
+
+// call block
+addHistoryReadersInlocalStorage();
+
+window.addEventListener('load', function load(event) {
+    window.removeEventListener('load', load, false)
+    addHistoryReadersInlocalStorage();
+})
+window.addEventListener('reload', function load(event) {
+    window.removeEventListener('load', load, false)
+    addHistoryReadersInlocalStorage();
+})
