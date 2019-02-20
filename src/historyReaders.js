@@ -40,23 +40,28 @@ function extractCurrentMangaInfo (reader) {
 }
 function updateReaderHistory(current, manga_infos) {
     // loop into mangás to find the manga, and then your chapter to update them or add something
+    let isMangaFound = false
+
     current.mangas.forEach((element, index) => {
-        if (current.mangas[index].name === manga_infos.manga) {
+        if (current.mangas[index].name === manga_infos.name) {
             let isCapFound = false
             current.mangas[index].history.forEach((el, i) => {
                 // finds the chapter and update the last page read
-                if (current.mangas[index].history[i].cap === manga_infos.cap) {
-                    current.mangas[index].history[i].page = manga_infos.page
+                if (current.mangas[index].history[i].cap === manga_infos.history[0].cap) {
+                    current.mangas[index].history[i].page = manga_infos.history[0].page
                     isCapFound = true
                 }
             })
             if (!isCapFound) {
-                current.mangas[index].history.push({cap: manga_infos.cap, page: manga_infos.page})
+                current.mangas[index].history.push(manga_infos.history[0])
                 console.log('INSERIDO NOVO CAPITULO NO HISTORICO')
             }
+            isMangaFound = true
         }
     })
-
+    // if not find the manga in history to update, add them
+    if (!isMangaFound) current.mangas.push(manga_infos)
+    
     return current
 }
 
@@ -107,7 +112,7 @@ function addHistoryReadersInlocalStorage () {
                     */
                    isReaderFound = true
                     console.log('ATUALIZANDO HISTORICO')
-                    history_readers[index] = updateReaderHistory(history_readers[index], manga_infos)
+                    history_readers[index] = updateReaderHistory(history_readers[index], manga_history[0].mangas[0])
                 }
             })
 
@@ -134,13 +139,13 @@ function addHistoryReadersInlocalStorage () {
 
 
 // call block
-addHistoryReadersInlocalStorage();
+// addHistoryReadersInlocalStorage();
 
 window.addEventListener('load', function load(event) {
-    window.removeEventListener('load', load, false)
+    window.removeEventListener('load', load, false);
     addHistoryReadersInlocalStorage();
 })
-window.addEventListener('reload', function load(event) {
-    window.removeEventListener('load', load, false)
-    addHistoryReadersInlocalStorage();
-})
+// window.addEventListener('reload', function load(event) {
+//     window.removeEventListener('reload', load, false)
+//     addHistoryReadersInlocalStorage();
+// })
