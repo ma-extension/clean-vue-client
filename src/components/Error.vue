@@ -6,7 +6,7 @@
         <div class="readers">
           <h4>Leitores recentes:</h4>
           <div v-for="(el, index) in items" :key="index">
-            <p class="readers__name"><strong>{{ el.reader }}:</strong></p>
+            <p class="readers__name"><strong><a :href="el.hostname">{{ el.reader }}:</a></strong></p>
             <div v-for="(el_manga, index_mangas) in el.mangas" :key="index_mangas">
               <p>&nbsp;&nbsp;<strong>{{ el_manga.name }}</strong>
                 <br>
