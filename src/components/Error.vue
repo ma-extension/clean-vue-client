@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import HistoryList from '@/components/HistoryList.vue'
+import HistoryList from '../components/HistoryList.vue'
 export default {
   components: {
     HistoryList
@@ -29,7 +29,7 @@ export default {
 .container {
   /* background configs */
   /* background-image: url('../assets/galaxy_background.jpg'); */
-  background: rgba(0, 0, 0, 0.8);
+  /* background: rgb(255, 255, 255); */
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -47,7 +47,7 @@ export default {
 }
 
 .help {
-  color: aliceblue;
+  /* color: aliceblue; */
 }
 
 </style>
