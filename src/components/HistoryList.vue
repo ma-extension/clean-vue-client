@@ -47,13 +47,13 @@
         </div> -->
         <div class="reader">
             <div class="reader__item" v-for="(el, index) in items" :key="index">
-                <p class="reader__name"><strong><a :href="el.hostname">{{ el.reader }}:</a></strong></p>
+                <p class="reader__name"><strong><a :href="el.hostname">{{ el.reader }}</a></strong></p>
                 <div class="reader__manga" v-for="(el_manga, index_mangas) in el.mangas" :key="index_mangas">
                     <div class="reader__manga__name">
                         <strong>{{ el_manga.name }}</strong>
                     </div>
                     <div class="reader__manga__cap" v-for="(el_caps, index_caps) in el_manga.history" :key="index_caps">
-                        <a :href="el_caps.url">{{ el_caps.cap }}</a>
+                        <a :href="el_caps.url">Capítulo {{ el_caps.cap }}</a>
                         <div>
                             <img
                                 class="reader__manga__cap__button" @mousedown="(e) => onDeleteButton(e)" @mouseup="e => onDeleteButton(e)" 
@@ -118,14 +118,21 @@ export default {
 
 .reader__item {
     margin-bottom: 10px;
-    background: rgba(128, 128, 128, 0.205);
+    background: rgba(128, 128, 128, 0.075);
+    border-bottom: 1px solid rgba(59, 59, 59, 0.335);
+}
+
+.reader__item:hover {
+  box-shadow: 0px 1px 5px rgb(223, 223, 223);
+    margin-bottom: 10px;
+    /* background: rgba(128, 128, 128, 0.205); */
 }
 
 .reader__name:hover {
     background: rgba(128, 128, 128, 0.205);
 }
 .reader__name {
-    background: rgba(128, 128, 128, 0.205);
+    /* background: rgba(128, 128, 128, 0.205); */
     font-size: 16px;
     font-weight: bold;
     padding: 15px 0px 15px 0px;
@@ -139,7 +146,7 @@ export default {
     color: currentColor;
 }
 .reader__manga {
-    padding: 5px;
+    margin: 5px;
 }
 .reader__manga__name {
     padding: 5px;
