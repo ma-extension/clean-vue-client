@@ -87,7 +87,8 @@ function addHistoryReadersInlocalStorage () {
                     history: [
                         {
                             cap: manga_infos.cap,
-                            page: manga_infos.page
+                            page: manga_infos.page,
+                            url: location.href
                         }
                     ]
                 }
