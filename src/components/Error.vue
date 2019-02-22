@@ -1,10 +1,12 @@
 <template>
-    <div class="container">
+    <div class="error">
+      <div class="container">
         <div class="title">
           <h1>Manga Agenda</h1>
         </div>
         <HistoryList />
         <br>
+      </div>
         <div class="help">
           <p>Oops, este site não é suportado como um leitor gerenciavel.</p>
           <a href="#">Ajuda</a>
@@ -42,12 +44,14 @@ export default {
 .title {
   font-family: 'Courier New', Courier, monospace;
   text-align: center;
-  text-shadow: 1px 1px 5px black;
-  color: aliceblue;
+  /* text-shadow: 1px 1px 0px black; */
+  color: rgba(0, 0, 0, 0.883);
 }
 
 .help {
-  /* color: aliceblue; */
+  padding: 16px;
+  color: aliceblue;
+  background: rgba(0, 0, 0, 0.794);
 }
 
 </style>
