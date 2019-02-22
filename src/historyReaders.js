@@ -1,3 +1,15 @@
+/*
+    HistoryReaders.js library.
+    See the following rules to register a new Reader in the extension:
+        - Add a new object with the three mandatory attributes:
+            name: 'A literal name of the extension, used to find them and display in popup'
+            hostname: 'the base url of the reader, whithout protocol part and bar at end. valid example -> "myreader.com.br"'
+            regex_expression: 'used to rescue the name, cap and page of the current mangá that the user are reading,
+                               be attempt with the named groups, there are crucial for the extension work well.'
+            exclusive_for(optional): 'the name of the mangá, if the reader is exclusive for it.'
+
+    Above, you have two examples of the readers registered in the extension
+*/
 const READERS = [
     {
         name: 'onepiece-ex',
