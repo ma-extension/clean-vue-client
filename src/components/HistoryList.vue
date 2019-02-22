@@ -1,6 +1,6 @@
 <template>
     <div class="readers">
-        <h4>Leituras recentes:</h4>
+        <h4 class="readers__header">Leituras recentes:</h4>
         <!-- <div class="reader">
             <p class="reader__name">central-de-mangas</p>
             <div class="reader__manga">
@@ -112,6 +112,12 @@ export default {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 14px;
 }
+.readers__header {
+    padding: 10px;
+    background: chocolate;
+    color: azure;
+    text-align: center;
+}
 .reader {
   /* box-shadow: 0px 2px 5px rgba(59, 59, 59, 0.342); */
 }
@@ -129,10 +135,9 @@ export default {
 }
 
 .reader__name:hover {
-    background: rgba(128, 128, 128, 0.205);
+    /* background: rgba(128, 128, 128, 0.205); */
 }
 .reader__name {
-    /* background: rgba(128, 128, 128, 0.205); */
     font-size: 16px;
     font-weight: bold;
     padding: 15px 0px 15px 0px;
@@ -144,11 +149,13 @@ export default {
 .reader__name a {
     text-decoration: none;
     color: currentColor;
+    color: darkorange;
 }
 .reader__manga {
     margin: 5px;
 }
 .reader__manga__name {
+    background: rgba(128, 128, 128, 0.205);
     padding: 5px;
     border-bottom: 1px solid rgba(59, 59, 59, 0.335);
 }
@@ -157,11 +164,11 @@ export default {
 }
 
 .reader__manga__cap {
-    text-decoration: none;
     padding: 5px;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+    color: rgb(54, 54, 54);
 }
 
 .reader__manga__cap a{
@@ -176,15 +183,12 @@ export default {
 .reader__manga__cap:hover {
     /* color: azure; */
     background-color: #3DB9CC;
+    color: azure;
     font-size: 15px;
 }
 
 .reader__manga__cap__button:hover {
     margin: -1px;
     border: 1px solid rgba(255, 255, 255, 0.486);
-}
-.readers__manga__cap {
-  text-decoration: none;
-  color: darkorange;
 }
 </style>
