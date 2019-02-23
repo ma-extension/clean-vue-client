@@ -10,6 +10,7 @@
 
     Above, you have two examples of the readers registered in the extension
 */
+
 const READERS = [
     {
         name: 'onepiece-ex',
@@ -141,24 +142,8 @@ function addHistoryReadersInlocalStorage () {
     })
 };
 
-// console.log(location.href)
-// chrome.storage.sync.set({'foo': 'bar'}, function() {
-//     console.log('Settings saved')
-// })
-
-// chrome.storage.sync.set({foo: {bar: 'hello'}}, function() {
-//     console.log('Settings saved')
-// })
-
-
 // call block
-// addHistoryReadersInlocalStorage();
-
 window.addEventListener('load', function load(event) {
     window.removeEventListener('load', load, false);
     addHistoryReadersInlocalStorage();
 })
-// window.addEventListener('reload', function load(event) {
-//     window.removeEventListener('reload', load, false)
-//     addHistoryReadersInlocalStorage();
-// })
