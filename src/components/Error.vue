@@ -1,10 +1,10 @@
 <template>
     <div class="error">
       <div class="container">
-        <div class="title">
+        <!-- <div class="title">
           <h1>Manga Agenda</h1>
-        </div>
-        <HistoryList />
+        </div> -->
+        <HistoryList showHistoryFrom="all"/>
         <br>
       </div>
         <div class="help">
@@ -32,6 +32,7 @@ export default {
   /* background configs */
   /* background-image: url('../assets/galaxy_background.jpg'); */
   /* background: rgb(255, 255, 255); */
+  background: rgb(238, 238, 238);
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -39,13 +40,6 @@ export default {
 
 .container {
   padding: 16px;
-}
-
-.title {
-  font-family: 'Courier New', Courier, monospace;
-  text-align: center;
-  /* text-shadow: 1px 1px 0px black; */
-  color: rgba(0, 0, 0, 0.883);
 }
 
 .help {
