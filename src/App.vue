@@ -1,5 +1,8 @@
 <template>
   <div id="app">
+      <div class="title">
+        <h1>Manga Agenda</h1>
+      </div>
     <Popup v-if="isReader" />
     <Error v-else />
   </div>
@@ -23,14 +26,11 @@ export default {
   },
   methods: {
     checkIsReader () {
-      let ALLOWED_HOSTNAMES = [
-        'onepiece-ex.com.br'
-      ]
-      
+      // this.isReader = true
       utils.current_url().then((resp) => {
         let hostname = utils.url_domain(resp)
 
-        let aux = ALLOWED_HOSTNAMES.filter((curr) => {
+        let aux = utils.READERS.filter((curr) => {
           return curr === hostname
         })
   
@@ -51,8 +51,16 @@ export default {
   margin: 0%;
   padding: 0%;
   box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 body {
   width: 300px;
+}
+.title {
+  text-align: center;
+  background-color: brown;
+  padding: 5px;
+  color: azure;
+  font-style: italic;
 }
 </style>
