@@ -1,4 +1,4 @@
-# test_chrome_extension_with_vue
+# Clean Vue Client for Chrome
 
 ## Project setup
 ```
